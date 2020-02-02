@@ -4,8 +4,8 @@ services:
   - docker
 
 script: make build
-  on:
-    branch: master
+on:
+  branch: master
 
 deploy:
   provider: script
