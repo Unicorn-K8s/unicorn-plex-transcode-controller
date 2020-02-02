@@ -3,6 +3,10 @@ language: generic
 services:
   - docker
 
+stages:
+  - build
+  - deploy
+
 build:
   provider: script
   script: make build
