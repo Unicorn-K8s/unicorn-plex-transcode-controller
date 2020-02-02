@@ -5,8 +5,6 @@ services:
 
 script: make build
 
-deploy:
-  provider: script
-  script: docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD && make release
-  on:
-    branch: master
+after_success:
+  - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD
+  - make release
