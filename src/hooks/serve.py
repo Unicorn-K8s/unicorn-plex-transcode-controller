@@ -122,7 +122,7 @@ class Controller(BaseHTTPRequestHandler):
         logger.debug("Type: %s", type(self.headers.get_all("Content-Length")))
         request = json.loads(
             self.rfile.read(
-                int(self.headers.get_all("Content-Length")(0))
+                int(self.headers.get_all("Content-Length")[0])
             )
         )
         self._logger.debug("Current Path: %s", self.path)
