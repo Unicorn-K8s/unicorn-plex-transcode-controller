@@ -9,7 +9,7 @@ import sys
 class Controller(BaseHTTPRequestHandler):
 
     def __init__(self, request, client_address, server):
-        super().__init__(self, request, client_address, server)
+        BaseHTTPRequestHandler.__init__(self, request, client_address, server)
         self._logger = logging.getLogger()
 
     def sync_transcoder_labels(self, request):
