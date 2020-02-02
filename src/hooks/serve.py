@@ -10,7 +10,7 @@ class Controller(BaseHTTPRequestHandler):
 
     def __init__(self, request, client_address, server):
         BaseHTTPRequestHandler.__init__(self, request, client_address, server)
-        self._logger = logging.getLogger()
+        self._logger = logging.getLogger("unicorn-transcoder-controller")
 
     def sync_transcoder_labels(self, request):
         pod = request["object"]
@@ -116,7 +116,8 @@ class Controller(BaseHTTPRequestHandler):
         return {"attachments": attachments, "finalized": finalized}
 
     def do_POST(self):
-        self._logger.debug("Content Length: %s", self.headers.get_all("Content-Length"))
+        logger = logging.getLogger("unicorn-transcoder-controller")
+        logger.debug("Content Length: %s", self.headers.get_all("Content-Length"))
         request = json.loads(
             self.rfile.read(
                 int(self.headers.get_all("Content-Length"))
