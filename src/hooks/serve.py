@@ -60,7 +60,7 @@ class Controller(BaseHTTPRequestHandler):
                 }
             }
             ingress = {
-                "apiVersion": "extensions/v1beta",
+                "apiVersion": "extensions/v1beta1",
                 "kind": "Ingress",
                 "metadata": {
                     "name": statefulset["metadata"]["name"] + "-" + str(i),
