@@ -116,6 +116,7 @@ class Controller(BaseHTTPRequestHandler):
         return {"attachments": attachments, "finalized": finalized}
 
     def do_POST(self):
+        self._logger.debug("Content Length: %s", self.headers.get_all("Content-Length"))
         request = json.loads(
             self.rfile.read(
                 int(self.headers.get_all("Content-Length"))
