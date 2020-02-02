@@ -53,8 +53,8 @@ class Controller(BaseHTTPRequestHandler):
                     },
                     "ports": [
                         {
-                            "port": service_port[0],
-                            "targetPort": service_port[1]
+                            "port": int(service_port[0]),
+                            "targetPort": int(service_port[1])
                         }
                     ]
                 }
@@ -94,7 +94,7 @@ class Controller(BaseHTTPRequestHandler):
                                         "serviceName":
                                         statefulset["metadata"]["name"] + "-"
                                         + str(i),
-                                        "servicePort": service_port[0]
+                                        "servicePort": int(service_port[0])
                                      }}
                                 ]
                             }
