@@ -111,7 +111,7 @@ class Controller(BaseHTTPRequestHandler):
         attachments = []
         services_finalized = len(request["attachments"]["Service.v1"]) == 0
         ingress_finalized = \
-            len(request["attachments"]["Ingress.networking.k8s.io/v1beta1"]) \
+            len(request["attachments"]["Ingress.extensions/v1beta1"]) \
             == 0
         finalized = (services_finalized and ingress_finalized)
 
