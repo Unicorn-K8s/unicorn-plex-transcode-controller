@@ -60,17 +60,17 @@ class Controller(BaseHTTPRequestHandler):
                 }
             }
             ingress = {
-                "apiVersion": "networking.k8s.io/v1beta1",
+                "apiVersion": "extensions/v1beta",
                 "kind": "Ingress",
                 "metadata": {
                     "name": statefulset["metadata"]["name"] + "-" + str(i),
                     "labels": {"transcoder-ingress": "transcoder-ingress"},
                     "annotations": {
                         "kubernetes.io/ingress.class": "nginx",
-                        "kubernetes.io/tls-acme": '"true"',
+                        "kubernetes.io/tls-acme": "true",
                         "cert-manager.io/cluster-issuer": "letsencrypt-prod",
                         "nginx.ingress.kubernetes.io/proxy-http-version":
-                            '"1.1"'
+                            "1.1"
                     }
                 },
                 "spec": {
