@@ -117,10 +117,12 @@ class Controller(BaseHTTPRequestHandler):
 
     def do_POST(self):
         logger = logging.getLogger("unicorn-transcoder-controller")
-        logger.debug("Content Length: %s", self.headers.get_all("Content-Length"))
+        logger.debug("Content Length: %s",
+                     self.headers.get_all("Content-Length"))
+        logger.debug("Type: %s", type(self.headers.get_all("Content-Length")))
         request = json.loads(
             self.rfile.read(
-                int(self.headers.get_all("Content-Length"))
+                int(self.headers.get_all("Content-Length")(0))
             )
         )
         self._logger.debug("Current Path: %s", self.path)
