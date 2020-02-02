@@ -3,13 +3,7 @@ language: minimal
 services:
   - docker
 
-stages:
-  - build
-  - deploy
-
-build:
-  provider: script
-  script: make build
+script: make build
   on:
     branch: master
 
