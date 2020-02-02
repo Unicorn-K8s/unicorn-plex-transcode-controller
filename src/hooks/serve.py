@@ -10,15 +10,15 @@ class Controller(BaseHTTPRequestHandler):
 
     def __init__(self, request, client_address, server):
         BaseHTTPRequestHandler.__init__(self, request, client_address, server)
-        self._logger = logging.getLogger("unicorn-transcoder-controller")
 
     def sync_transcoder_labels(self, request):
+        logger = logging.getLogger("unicorn-transcoder-controller")
         pod = request["object"]
         pod_name = pod["metadata"]["name"]
-        self._logger.info("Handling Transcoder Label For: %s", pod_name)
+        logger.info("Handling Transcoder Label For: %s", pod_name)
         label_key = pod["metadata"]["annotations"]["transcoder-name-label"]
 
-        self._logger.info("Setting Label %s: %s", label_key, pod_name)
+        logger.info("Setting Label %s: %s", label_key, pod_name)
         labels = {
             label_key: pod_name
         }
@@ -26,9 +26,10 @@ class Controller(BaseHTTPRequestHandler):
         return {"labels": labels}
 
     def sync_transcoder_ingress(self, request):
+        logger = logging.getLogger("unicorn-transcoder-controller")
         statefulset = request["object"]
         statefulset_annotations = statefulset["metadata"]["annotations"]
-        self._logger.info("Creating Ingress for Statefulset...")
+        logger.info("Creating Ingress for Statefulset...")
         label_key = statefulset_annotations["transcoder-pod-name-label"]
         ports = statefulset_annotations["transcoder-pod-port"]
         transcode_domain = statefulset_annotations["transcode-domain"]
@@ -117,16 +118,13 @@ class Controller(BaseHTTPRequestHandler):
 
     def do_POST(self):
         logger = logging.getLogger("unicorn-transcoder-controller")
-        logger.debug("Content Length: %s",
-                     self.headers.get_all("Content-Length"))
-        logger.debug("Type: %s", type(self.headers.get_all("Content-Length")))
         request = json.loads(
             self.rfile.read(
                 int(self.headers.get_all("Content-Length")[0])
             )
         )
-        self._logger.debug("Current Path: %s", self.path)
-        self._logger.debug("Current Request: %s", json.dumps(request))
+        logger.debug("Current Path: %s", self.path)
+        logger.debug("Current Request: %s", json.dumps(request))
         if self.path == "/sync-transcoder-labels":
             response = self.sync_transcoder_labels(request)
         elif self.path == "/sync-transcoder-ingress":
