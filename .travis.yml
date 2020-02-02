@@ -1,7 +1,11 @@
-language: python
-
 services:
   - docker
+
+build:
+  provider: script
+  script: make build
+  on:
+    branch: master
 
 deploy:
   provider: script
