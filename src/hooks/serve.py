@@ -3,7 +3,7 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
 import logging
-from os import sys
+import sys
 
 
 class Controller(BaseHTTPRequestHandler):
