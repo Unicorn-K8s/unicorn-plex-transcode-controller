@@ -121,6 +121,8 @@ class Controller(BaseHTTPRequestHandler):
                 int(self.headers.getheader('content-length'))
             )
         )
+        self._logger.debug("Current Path: %s", self.path)
+        self._logger.debug("Current Request: %s", json.dumps(request))
         if self.path == "/sync-transcoder-labels":
             response = self.sync_transcoder_labels(request)
         elif self.path == "/sync-transcoder-ingress":
@@ -138,18 +140,15 @@ class Controller(BaseHTTPRequestHandler):
 
 
 def run_controller():
+    formatter = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    logging.basicConfig(stream=sys.stdout,
+                        format=formatter,
+                        level=logging.DEBUG)
     logger = logging.getLogger("unicorn-transcoder-controller")
-    handler = logging.StreamHandler(sys.stdout)
-    handler.setLevel(logging.INFO)
-    formatter = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-    )
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
 
+    logger.info("Starting controller...")
     server_conn = ('', 80)
     controller = HTTPServer(server_conn, Controller)
-    logger.info("Starting controller...")
     try:
         controller.serve_forever()
     except KeyboardInterrupt:
