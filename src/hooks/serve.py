@@ -102,8 +102,9 @@ class Controller(BaseHTTPRequestHandler):
                     ]
                 }
             }
-            trancode_ingress = [service, ingress]
-            attachments.append(trancode_ingress)
+
+            attachments.append(ingress)
+            attachments.append(service)
         return {"attachments": attachments}
 
     def finalize_transcoder_ingress(self, request):
