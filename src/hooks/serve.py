@@ -118,7 +118,7 @@ class Controller(BaseHTTPRequestHandler):
     def do_POST(self):
         request = json.loads(
             self.rfile.read(
-                int(self.headers.getheader('content-length'))
+                int(self.headers.get_all("Content-Length"))
             )
         )
         self._logger.debug("Current Path: %s", self.path)
